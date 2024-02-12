@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const rectanglePiece2 = document.createElement("div");
       rectanglePiece2.classList.add("rectangle");
       pipePiece.appendChild(rectanglePiece2);
-      rectanglePiece2.appendChild(tShapePiece);
+      pipePiece.appendChild(tShapePiece);
     } else if (shape === "short-rect") {
       const shortRecPiece = document.createElement("div");
       shortRecPiece.classList.add("t-shape");
@@ -68,23 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
     applyColor.call(pipePiece);
     
   }
-      triggerBlinking();
-  
-    // Function to blink the eyes once
-  function blinkEyes() {
-    const eyes = document.querySelectorAll('.eye');
-    eyes.forEach((eye) => {
-      eye.style.animation = 'blink 0.1s ease-out';
-      setTimeout(() => {
-        eye.style.animation = 'none';
-      }, 100); 
-    });
-  }
-  
-  // Function to trigger blinking at random intervals within 5 seconds
-  function triggerBlinking() {
-    setInterval(blinkEyes, 5000);
-  }
   
     function rotatePiece() {
       let counter = parseInt(this.getAttribute("data-counter")) || 0;
@@ -99,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function isCorrect() {
       let counter = parseInt(this.getAttribute("data-counter")) || 0;
       let initialDegree = parseInt(this.getAttribute("data-initial-degree")) || 0;
-      let shapeType = this.querySelector(":last-child").classList[0]; // Get the class of the first child element
+      let shapeType = this.querySelector(":last-child").classList[0]; 
   
       let correct = true;
       if (shapeType === "rectangle") {
@@ -235,10 +218,10 @@ document.addEventListener("DOMContentLoaded", function () {
     addPiece("empty", 0);
   
     addPiece("round", 0);
-    addPiece("t-shape", 90);
+    addPiece("t-shape", 90, true);
   
     addPiece("t-shape", 0);
-    addPiece("round", 90);
+    addPiece("round", 90, true);
   
     addPiece("short-rect", 270);
   
