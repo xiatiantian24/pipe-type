@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const gameContainer = document.getElementById("game-container");
-  
+  const gameContainer = document.getElementById("game-container");
+
   function addPiece(shape, initialDegree, hasEyes) {
     const pieceBorder = document.createElement("div");
     pieceBorder.classList.add("border");
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     pipePiece.setAttribute("data-initial-degree", initialDegree || 0);
     pipePiece.setAttribute("data-counter", 0);
     pieceBorder.appendChild(pipePiece);
-  
+
     if (shape !== "empty") {
       pipePiece.style.cursor = "pointer";
       pipePiece.addEventListener("click", () => {
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
         applyColor.call(pipePiece);
       });
     }
-  
+
     if (shape === "rectangle") {
       const rectanglePiece1 = document.createElement("div");
       rectanglePiece1.classList.add("rectangle");
@@ -44,67 +44,76 @@ document.addEventListener("DOMContentLoaded", function () {
       roundCap.appendChild(roundWrap);
       roundWrap.appendChild(roundPiece);
     }
-  
+
     if (hasEyes) {
       // Add eyes
       const eyesContainer = document.createElement("div");
       eyesContainer.classList.add("eyes-container");
-  
+
       const eyeLeft = document.createElement("div");
       eyeLeft.classList.add("eye");
       eyeLeft.classList.add("eye-left");
       eyesContainer.appendChild(eyeLeft);
-  
+
       const eyeRight = document.createElement("div");
       eyeRight.classList.add("eye");
       eyeRight.classList.add("eye-right");
       eyesContainer.appendChild(eyeRight);
-  
+
       pipePiece.appendChild(eyesContainer);
     }
-  
+
     gameContainer.appendChild(pieceBorder);
     rotatePiece.call(pipePiece);
     applyColor.call(pipePiece);
-    
   }
-  
-    function rotatePiece() {
-      let counter = parseInt(this.getAttribute("data-counter")) || 0;
-      let rotation =
-        parseInt(this.getAttribute("data-initial-degree")) + (counter % 4) * 90;
-  
-      this.style.transform = `rotate(${rotation}deg)`;
-      this.setAttribute("data-rotation", rotation);
-      this.setAttribute("data-counter", counter + 1);
+
+  function randomDelay() {
+    const eyesContainers = document.body.querySelectorAll('.eyes-container');
+    eyesContainers.forEach(eyesContainer => {
+      let delay = Math.floor(Math.random() * 5000);
+      eyesContainer.querySelectorAll('.eye').forEach(eye => {
+        eye.style.animationDelay = delay + "ms";
+      });
+    });
+  }
+
+  function rotatePiece() {
+    let counter = parseInt(this.getAttribute("data-counter")) || 0;
+    let rotation =
+      parseInt(this.getAttribute("data-initial-degree")) + (counter % 4) * 90;
+
+    this.style.transform = `rotate(${rotation}deg)`;
+    this.setAttribute("data-rotation", rotation);
+    this.setAttribute("data-counter", counter + 1);
+  }
+
+  function isCorrect() {
+    let counter = parseInt(this.getAttribute("data-counter")) || 0;
+    let initialDegree = parseInt(this.getAttribute("data-initial-degree")) || 0;
+    let shapeType = this.querySelector(":last-child").classList[0];
+
+    let correct = true;
+    if (shapeType === "rectangle") {
+      correct = counter % 2 === 1;
+    } else {
+      correct = (counter - 1) % 4 === 0;
     }
-  
-    function isCorrect() {
-      let counter = parseInt(this.getAttribute("data-counter")) || 0;
-      let initialDegree = parseInt(this.getAttribute("data-initial-degree")) || 0;
-      let shapeType = this.querySelector(":last-child").classList[0]; 
-  
-      let correct = true;
-      if (shapeType === "rectangle") {
-        correct = counter % 2 === 1;
-      } else {
-        correct = (counter - 1) % 4 === 0;
-      }
-  
-      console.log(
-        `Piece type: ${shapeType}, Counter: ${counter}, isCorrect: ${correct}`
-      );
-      return correct;
-    }
-  
+
+    console.log(
+      `Piece type: ${shapeType}, Counter: ${counter}, isCorrect: ${correct}`
+    );
+    return correct;
+  }
+
   function applyColor() {
     const piece = this.firstElementChild;
     const eyes = this.querySelectorAll('.eye');
-  
+
     if (!piece) return;
-  
+
     const correct = isCorrect.call(this);
-  
+
     if (correct) {
       this.classList.add("show-color");
       eyes.forEach(eye => {
@@ -117,372 +126,373 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   }
-  
-  
-    //1st row
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  
-    addPiece("rectangle", 0);
-    addPiece("empty", 0);
-  
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  
-    addPiece("empty", 0);
-    addPiece("rectangle", 0);
-  
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  
-    addPiece("empty", 0);
-    addPiece("round", 0);
-  
-    //2nd row
-    addPiece("round", 0);
-    addPiece("round", 90);
-  
-    addPiece("t-shape", 0);
-    addPiece("round", 90, true);
-  
-    addPiece("round", 0);
-    addPiece("round", 90);
-  
-    addPiece("round", 0, true);
-    addPiece("t-shape", 180);
-  
-    addPiece("round", 0);
-    addPiece("round", 90, true);
-  
-    addPiece("empty", 0);
-    addPiece("t-shape", 180, true);
-  
-    //3rd row
-    addPiece("round", 0);
-    addPiece("t-shape", 180, true);
-  
-    addPiece("rectangle", 0);
-    addPiece("rectangle", 0);
-  
-    addPiece("rectangle", 0, true);
-    addPiece("empty", 0);
-  
-    addPiece("rectangle", 0);
-    addPiece("rectangle", 0);
-  
-    addPiece("t-shape", 0);
-    addPiece("round", 180);
-  
-    addPiece("empty", 0);
-    addPiece("rectangle", 0);
-  
-    //4th row
-    addPiece("round", 270);
-    addPiece("round", 180);
-  
-    addPiece("round", 270);
-    addPiece("round", 180);
-  
-    addPiece("round", 270);
-    addPiece("round", 180);
-  
-    addPiece("round", 270);
-    addPiece("round", 180);
-  
-    addPiece("round", 270);
-    addPiece("round", 180);
-  
-    addPiece("round", 270);
-    addPiece("round", 180);
-  
-    //5th row
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  
-    addPiece("rectangle", 0);
-    addPiece("empty", 0);
-  
-    addPiece("empty", 0);
-  
-    addPiece("empty", 0);
-  
-    addPiece("rectangle", 0);
-    addPiece("empty", 0);
-  
-    addPiece("rectangle", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  
-    //6th row
-    addPiece("empty", 0);
-  
-    addPiece("round", 0);
-    addPiece("t-shape", 90, true);
-  
-    addPiece("t-shape", 0);
-    addPiece("round", 90, true);
-  
-    addPiece("short-rect", 270);
-  
-    addPiece("short-rect", 270);
-  
-    addPiece("t-shape", 0);
-    addPiece("round", 180);
-  
-    addPiece("rectangle", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  
-    //7th row
-    addPiece("empty", 0);
-  
-    addPiece("round", 270);
-    addPiece("t-shape", 180);
-  
-    addPiece("rectangle", 0);
-    addPiece("rectangle", 0);
-  
-    addPiece("rectangle", 0);
-  
-    addPiece("rectangle", 0);
-  
-    addPiece("t-shape", 0);
-    addPiece("round", 90);
-  
-    addPiece("rectangle", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  
-    //8th row
-    addPiece("empty", 0);
-  
-    addPiece("empty", 0);
-    addPiece("rectangle", 0);
-  
-    addPiece("short-rect", 270);
-    addPiece("short-rect", 270);
-  
-    addPiece("short-rect", 270);
-  
-    addPiece("rectangle", 0);
-  
-    addPiece("short-rect", 270);
-    addPiece("short-rect", 270);
-  
-    addPiece("round", 270);
-    addPiece("round", 180);
-    addPiece("empty", 0);
-  
-    //9th row
-    addPiece("empty", 0);
-    addPiece("round", 270);
-    addPiece("round", 180);
-  
-    addPiece("empty", 0);
-  
-    addPiece("empty", 0);
-    addPiece("round", 270);
-  
-    addPiece("round", 180);
-    addPiece("empty", 0);
-  
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  
-    //11th row
-    addPiece("round", 0);
-    addPiece("t-shape", 90);
-    addPiece("round", 90);
-  
-    addPiece("round", 0);
-    addPiece("round", 90);
-  
-    addPiece("round", 0);
-    addPiece("round", 90);
-  
-    addPiece("t-shape", 90);
-    addPiece("round", 90);
-  
-    addPiece("round", 0);
-    addPiece("t-shape", 90);
-  
-    addPiece("empty", 90);
-  
-    //12th row
-    addPiece("rectangle", 0);
-    addPiece("rectangle", 0);
-    addPiece("rectangle", 0);
-  
-    addPiece("rectangle", 0);
-    addPiece("rectangle", 0);
-  
-    addPiece("rectangle", 0);
-    addPiece("rectangle", 0);
-  
-    addPiece("rectangle", 0);
-    addPiece("round", 180);
-  
-    addPiece("round", 270);
-    addPiece("rectangle", 0);
-  
-    addPiece("empty", 0);
-  
-    //13th row
-    addPiece("short-rect", 270);
-    addPiece("short-rect", 270);
-    addPiece("short-rect", 270);
-  
-    addPiece("short-rect", 270);
-    addPiece("short-rect", 270);
-  
-    addPiece("round", 270);
-    addPiece("round", 180);
-  
-    addPiece("rectangle", 0);
-    addPiece("empty", 0);
-  
-    addPiece("empty", 0);
-    addPiece("rectangle", 0);
-    addPiece("empty", 0);
-  
-    //14th row
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("round", 270);
-    addPiece("round", 180);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("round", 270);
-    addPiece("round", 180);
-  
-    //15th row
-    addPiece("empty", 0);
-    addPiece("t-shape", 0);
-    addPiece("round", 90);
-  
-    addPiece("round", 0);
-    addPiece("rectangle", 90);
-  
-    addPiece("empty", 0);
-    addPiece("t-shape", 0);
-  
-    addPiece("short-rect", 90);
-    addPiece("short-rect", 90);
-  
-    addPiece("short-rect", 90);
-    addPiece("short-rect", 90);
-    addPiece("empty", 0);
-  
-    //16th row
-    addPiece("empty", 0);
-    addPiece("rectangle", 0);
-    addPiece("empty", 0);
-  
-    addPiece("round", 270);
-    addPiece("round", 90);
-  
-    addPiece("empty", 0);
-    addPiece("rectangle", 0);
-  
-    addPiece("rectangle", 0);
-    addPiece("rectangle", 0);
-  
-    addPiece("rectangle", 0);
-    addPiece("rectangle", 0);
-    addPiece("empty", 0);
-  
-    //17th row
-    addPiece("empty", 0);
-    addPiece("short-rect", 270);
-    addPiece("empty", 0);
-  
-    addPiece("rectangle", 90);
-    addPiece("round", 180);
-  
-    addPiece("round", 270);
-    addPiece("round", 180);
-  
-    addPiece("round", 270);
-    addPiece("round", 180);
-  
-    addPiece("t-shape", 0);
-    addPiece("round", 180);
-    addPiece("empty", 0);
-  
-    //17th row
-    addPiece("empty", 0);
-    addPiece("short-rect", 90);
-    addPiece("short-rect", 90);
-    addPiece("short-rect", 90);
-  
-    addPiece("round", 90);
-    addPiece("round", 0);
-  
-    addPiece("short-rect", 90);
-    addPiece("short-rect", 90);
-  
-    addPiece("rectangle", 90);
-    addPiece("round", 90);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  
-    //18th row
-    addPiece("empty", 0);
-    addPiece("rectangle", 0);
-    addPiece("rectangle", 0);
-    addPiece("rectangle", 0);
-  
-    addPiece("t-shape", 0);
-    addPiece("t-shape", 180);
-  
-    addPiece("round", 270);
-    addPiece("t-shape", 180);
-  
-    addPiece("round", 0);
-    addPiece("round", 180);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  
-    //19th row
-    addPiece("empty", 0);
-    addPiece("round", 270);
-    addPiece("t-shape", 270);
-    addPiece("round", 180);
-  
-    addPiece("round", 180);
-    addPiece("round", 270);
-  
-    addPiece("empty", 0);
-    addPiece("rectangle", 0);
-  
-    addPiece("round", 270);
-    addPiece("rectangle", 90);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  
-    //20th row
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("round", 270);
-    addPiece("round", 180);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-    addPiece("empty", 0);
-  });
-  
-  //TODO: add reset button
-  //TODO: fix border color
-  //TODO: fix cap display
+
+
+  //1st row
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  addPiece("rectangle", 0);
+  addPiece("empty", 0);
+
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  addPiece("empty", 0);
+  addPiece("rectangle", 0);
+
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  addPiece("empty", 0);
+  addPiece("round", 0);
+
+  //2nd row
+  addPiece("round", 0);
+  addPiece("round", 90);
+
+  addPiece("t-shape", 0);
+  addPiece("round", 90, true);
+
+  addPiece("round", 0);
+  addPiece("round", 90);
+
+  addPiece("round", 0);
+  addPiece("t-shape", 180, true);
+
+  addPiece("round", 0);
+  addPiece("round", 90, true);
+
+  addPiece("empty", 0);
+  addPiece("t-shape", 180, true);
+
+  //3rd row
+  addPiece("round", 0);
+  addPiece("t-shape", 180, true);
+
+  addPiece("rectangle", 0);
+  addPiece("rectangle", 0);
+
+  addPiece("rectangle", 0, true);
+  addPiece("empty", 0);
+
+  addPiece("rectangle", 0);
+  addPiece("rectangle", 0);
+
+  addPiece("t-shape", 0);
+  addPiece("round", 180);
+
+  addPiece("empty", 0);
+  addPiece("rectangle", 0);
+
+  //4th row
+  addPiece("round", 270);
+  addPiece("round", 180);
+
+  addPiece("round", 270);
+  addPiece("round", 180);
+
+  addPiece("round", 270);
+  addPiece("round", 180);
+
+  addPiece("round", 270);
+  addPiece("round", 180);
+
+  addPiece("round", 270);
+  addPiece("round", 180);
+
+  addPiece("round", 270);
+  addPiece("round", 180);
+
+  //5th row
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  addPiece("rectangle", 0);
+  addPiece("empty", 0);
+
+  addPiece("empty", 0);
+
+  addPiece("empty", 0);
+
+  addPiece("rectangle", 0);
+  addPiece("empty", 0);
+
+  addPiece("rectangle", 0, true);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  //6th row
+  addPiece("empty", 0);
+
+  addPiece("round", 0);
+  addPiece("t-shape", 90, true);
+
+  addPiece("t-shape", 0);
+  addPiece("round", 90, true);
+
+  addPiece("short-rect", 270, true);
+
+  addPiece("short-rect", 270, true);
+
+  addPiece("t-shape", 0);
+  addPiece("round", 180);
+
+  addPiece("rectangle", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  //7th row
+  addPiece("empty", 0);
+
+  addPiece("round", 270);
+  addPiece("t-shape", 180);
+
+  addPiece("rectangle", 0);
+  addPiece("rectangle", 0);
+
+  addPiece("rectangle", 0);
+
+  addPiece("rectangle", 0);
+
+  addPiece("t-shape", 0);
+  addPiece("round", 90, true);
+
+  addPiece("rectangle", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  //8th row
+  addPiece("empty", 0);
+
+  addPiece("empty", 0);
+  addPiece("rectangle", 0);
+
+  addPiece("short-rect", 270);
+  addPiece("short-rect", 270);
+
+  addPiece("short-rect", 270);
+
+  addPiece("rectangle", 0);
+
+  addPiece("short-rect", 270);
+  addPiece("short-rect", 270);
+
+  addPiece("round", 270);
+  addPiece("round", 180);
+  addPiece("empty", 0);
+
+  //9th row
+  addPiece("empty", 0);
+  addPiece("round", 270);
+  addPiece("round", 180);
+
+  addPiece("empty", 0);
+
+  addPiece("empty", 0);
+  addPiece("round", 270);
+
+  addPiece("round", 180);
+  addPiece("empty", 0);
+
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  //10th row
+  addPiece("round", 0);
+  addPiece("t-shape", 90, true);
+  addPiece("round", 90);
+
+  addPiece("round", 0);
+  addPiece("round", 90, true);
+
+  addPiece("round", 0);
+  addPiece("round", 90);
+
+  addPiece("t-shape", 90, true);
+  addPiece("round", 90);
+
+  addPiece("round", 0);
+  addPiece("t-shape", 90, true);
+
+  addPiece("empty", 90);
+
+  //11th row
+  addPiece("rectangle", 0);
+  addPiece("rectangle", 0);
+  addPiece("rectangle", 0);
+
+  addPiece("rectangle", 0);
+  addPiece("rectangle", 0);
+
+  addPiece("rectangle", 0, true);
+  addPiece("rectangle", 0);
+
+  addPiece("rectangle", 0);
+  addPiece("round", 180);
+
+  addPiece("round", 270);
+  addPiece("rectangle", 0);
+
+  addPiece("empty", 0);
+
+  //12th row
+  addPiece("short-rect", 270);
+  addPiece("short-rect", 270);
+  addPiece("short-rect", 270);
+
+  addPiece("short-rect", 270);
+  addPiece("short-rect", 270);
+
+  addPiece("round", 270);
+  addPiece("round", 180);
+
+  addPiece("rectangle", 0);
+  addPiece("empty", 0);
+
+  addPiece("empty", 0);
+  addPiece("rectangle", 0);
+  addPiece("empty", 0);
+
+  //13th row
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("round", 270);
+  addPiece("round", 180);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("round", 270);
+  addPiece("round", 180);
+
+  //14th row
+  addPiece("empty", 0);
+  addPiece("t-shape", 0);
+  addPiece("round", 90, true);
+
+  addPiece("round", 0);
+  addPiece("rectangle", 90, true);
+
+  addPiece("empty", 0);
+  addPiece("t-shape", 0, true);
+
+  addPiece("short-rect", 90);
+  addPiece("short-rect", 90);
+
+  addPiece("short-rect", 90);
+  addPiece("short-rect", 90);
+  addPiece("empty", 0);
+
+  //15th row
+  addPiece("empty", 0);
+  addPiece("rectangle", 0);
+  addPiece("empty", 0);
+
+  addPiece("round", 270);
+  addPiece("round", 90);
+
+  addPiece("empty", 0);
+  addPiece("rectangle", 0);
+
+  addPiece("rectangle", 0);
+  addPiece("rectangle", 0, true);
+
+  addPiece("rectangle", 0);
+  addPiece("rectangle", 0);
+  addPiece("empty", 0);
+
+  //16th row
+  addPiece("empty", 0);
+  addPiece("short-rect", 270);
+  addPiece("empty", 0);
+
+  addPiece("rectangle", 90);
+  addPiece("round", 180);
+
+  addPiece("round", 270);
+  addPiece("round", 180);
+
+  addPiece("round", 270);
+  addPiece("round", 180);
+
+  addPiece("t-shape", 0, true);
+  addPiece("round", 180);
+  addPiece("empty", 0);
+
+  //17th row
+  addPiece("empty", 0);
+  addPiece("short-rect", 90);
+  addPiece("short-rect", 90);
+  addPiece("short-rect", 90);
+
+  addPiece("round", 90, true);
+  addPiece("round", 0);
+
+  addPiece("short-rect", 90);
+  addPiece("short-rect", 90);
+
+  addPiece("rectangle", 90, true);
+  addPiece("round", 90);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  //18th row
+  addPiece("empty", 0);
+  addPiece("rectangle", 0);
+  addPiece("rectangle", 0);
+  addPiece("rectangle", 0);
+
+  addPiece("t-shape", 0);
+  addPiece("t-shape", 180);
+
+  addPiece("round", 270, true);
+  addPiece("t-shape", 180);
+
+  addPiece("round", 0);
+  addPiece("round", 180);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  //19th row
+  addPiece("empty", 0);
+  addPiece("round", 270);
+  addPiece("t-shape", 270, true);
+  addPiece("round", 180);
+
+  addPiece("round", 180);
+  addPiece("round", 270);
+
+  addPiece("empty", 0);
+  addPiece("rectangle", 0);
+
+  addPiece("round", 270);
+  addPiece("rectangle", 90);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  //20th row
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("round", 270);
+  addPiece("round", 180);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+  addPiece("empty", 0);
+
+  randomDelay();
+});
+
+//TODO: add reset button
+//TODO: find another way to mask
