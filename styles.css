@@ -10,10 +10,10 @@ body {
     grid-template-rows: repeat(4, 100px);
     background: url("gradient-3.jpeg");
     background-size:cover;
-    left: -200px;
-    top: -400px;
+    left: -80px;
+    top: -180px;
     position: absolute;
-    transform:  scale(0.5);
+    transform:  scale(0.6);
   }
   
   .bg-square {
