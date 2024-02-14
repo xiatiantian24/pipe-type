@@ -129,13 +129,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function reset() {
     const resetButton = document.getElementById("reset");
-  
-    resetButton.addEventListener("click", function() {
-      location.reload();
+    resetButton.addEventListener("click", () => {
+      const pipePieces = document.querySelectorAll(".bg-square");
+      pipePieces.forEach(pipePiece => {
+        const initialDegree = parseInt(pipePiece.getAttribute("data-initial-degree"));
+        pipePiece.style.transform = `rotate(${initialDegree}deg)`;
+        pipePiece.setAttribute("data-counter", 1);
+        pipePiece.style.mixBlendMode = "screen";
+        pipePiece.style.background = "#eee";
+      });
     });
-  });
+  }
+
+  reset();
 
   //
   addPiece("empty", 0);
