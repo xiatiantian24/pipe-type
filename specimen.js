@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
     pipePiece.classList.add("bg-square");
     pipePiece.setAttribute("data-initial-degree", initialDegree || 0);
     pipePiece.setAttribute("data-counter", 0);
+    pipePiece.style.mixBlendMode = "screen";
+    pipePiece.style.background = "#eee";
     pieceBorder.appendChild(pipePiece);
 
     if (shape !== "empty") {
@@ -16,6 +18,24 @@ document.addEventListener("DOMContentLoaded", function () {
         rotatePiece.call(pipePiece);
         applyColor.call(pipePiece);
       });
+    }
+
+    if (hasEyes) {
+      // Add eyes
+      const eyesContainer = document.createElement("div");
+      eyesContainer.classList.add("eyes-container");
+
+      const eyeLeft = document.createElement("div");
+      eyeLeft.classList.add("eye");
+      eyeLeft.classList.add("eye-left");
+      eyesContainer.appendChild(eyeLeft);
+
+      const eyeRight = document.createElement("div");
+      eyeRight.classList.add("eye");
+      eyeRight.classList.add("eye-right");
+      eyesContainer.appendChild(eyeRight);
+
+      pipePiece.appendChild(eyesContainer);
     }
 
     if (shape === "rectangle") {
@@ -43,24 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
       pipePiece.appendChild(roundCap);
       roundCap.appendChild(roundWrap);
       roundWrap.appendChild(roundPiece);
-    }
-
-    if (hasEyes) {
-      // Add eyes
-      const eyesContainer = document.createElement("div");
-      eyesContainer.classList.add("eyes-container");
-
-      const eyeLeft = document.createElement("div");
-      eyeLeft.classList.add("eye");
-      eyeLeft.classList.add("eye-left");
-      eyesContainer.appendChild(eyeLeft);
-
-      const eyeRight = document.createElement("div");
-      eyeRight.classList.add("eye");
-      eyeRight.classList.add("eye-right");
-      eyesContainer.appendChild(eyeRight);
-
-      pipePiece.appendChild(eyesContainer);
     }
 
     gameContainer.appendChild(pieceBorder);
@@ -91,10 +93,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function isCorrect() {
     let counter = parseInt(this.getAttribute("data-counter")) || 0;
     let initialDegree = parseInt(this.getAttribute("data-initial-degree")) || 0;
-    let shapeType = this.querySelector(":last-child").classList[0];
+    let shapeType = this.lastChild.classList;
 
     let correct = true;
-    if (shapeType === "rectangle") {
+    if (shapeType == "rectangle") {
       correct = counter % 2 === 1;
     } else {
       correct = (counter - 1) % 4 === 0;
@@ -115,17 +117,28 @@ document.addEventListener("DOMContentLoaded", function () {
     const correct = isCorrect.call(this);
 
     if (correct) {
-      this.classList.add("show-color");
+      this.style.mixBlendMode = "screen";
       eyes.forEach(eye => {
         eye.style.display = 'block';
       });
     } else {
-      this.classList.remove("show-color");
+      this.style.mixBlendMode = "normal";
       eyes.forEach(eye => {
         eye.style.display = 'none';
       });
     }
   }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const resetButton = document.getElementById("reset");
+  
+    resetButton.addEventListener("click", function() {
+      location.reload();
+    });
+  });
+  
+
+  
 
 
   //1st row
@@ -449,8 +462,8 @@ document.addEventListener("DOMContentLoaded", function () {
   addPiece("rectangle", 0);
   addPiece("rectangle", 0);
 
-  addPiece("t-shape", 0);
-  addPiece("t-shape", 180);
+  addPiece("round", 270);
+  addPiece("round", 90);
 
   addPiece("round", 270, true);
   addPiece("t-shape", 180);
@@ -493,6 +506,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
   randomDelay();
 });
-
-//TODO: add reset button
-//TODO: find another way to mask
