@@ -9,30 +9,16 @@ body {
   transition: opacity 0.8s ease-in;
 }
 
-/* #content-wrap {
-  position: relative;
-    display: flex;
-    flex-flow: row wrap;
-    margin: 200px;
-    opacity: 1;
-    visibility: visible;
-    transition: all 0.5s ease-in-out;
-} */
-
 #description-wrap {
   position: sticky;
   top: 180px;
   left: 1050px;
-  /* display: flex;
-  flex-wrap: wrap;
-  flex-direction: row; */
   width: 300px;
-  /* float: left; */
 }
 
 
 h1 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   letter-spacing: 1rem;
   font-weight: 700;
   margin-bottom: 2.2rem;
@@ -51,7 +37,7 @@ p {
   position: absolute;
   width: auto;
   top: -220px;
-  left: -70px;
+  left: -5vw;
   display: grid;
   grid-template-columns: repeat(12, 100px);
   grid-template-rows: repeat(4, 100px);
@@ -88,33 +74,9 @@ img {
   height: 100%;
   background: black;
   left: calc(50%-0);
-  /* Adjusted for pixel-perfect alignment */
+  /* Adjusted for perfect alignment */
   box-sizing: border-box;
 }
-
-/* .rectangle::after {
-  content: "";
-  position: absolute;
-  top: -10px;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  background: #000;
-  border-radius: 50%;
-  z-index: 1;
-} */
-
-/* .rectangle::before {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  background: #000;
-  border-radius: 50%;
-  z-index: 1;
-} */
 
 .t-shape {
   content: "";
@@ -128,28 +90,6 @@ img {
   transform: rotate(-90deg);
   box-sizing: border-box;
 }
-
-/* .t-shape::before {
-  content: "";
-  position: absolute;
-  top: 40px;
-  width: 20px;
-  height: 20px;
-  background: #000;
-  border-radius: 50%;
-  z-index: 1;
-} */
-
-/* .t-shape::after {
-  content: "";
-  position: absolute;
-  bottom: 40px;
-  width: 20px;
-  height: 20px;
-  background: #000;
-  border-radius: 50%;
-  z-index: 1;
-} */
 
 .round-wrap {
   position: relative;
@@ -170,31 +110,6 @@ img {
   top: calc(50% - 10px);
   left: calc(50% - 10px);
 }
-
-/* 
-.round-cap::after {
-  content: "";
-  position: absolute;
-  top: 40px;
-  right: -10px;
-  width: 20px;
-  height: 20px;
-  background: #000;
-  border-radius: 50%;
-  z-index: 1;
-}
-
-.round-cap::before {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 40px;
-  width: 20px;
-  height: 20px;
-  background: #000;
-  border-radius: 50%;
-  z-index: 1;
-} */
 
 
 .eye {
@@ -232,14 +147,8 @@ button, a {
   transition: transform 0.2s ease-in-out;
 }
 
-a:hover, #index-link:hover {
-  transform: translateX(-6px);
-  color: #222;
-}
-
-#reset:hover{
-  transform: translateY(3px);
-  color: #222;
+a:hover, #index-link:hover, #reset:hover {
+  color: #111;
 }
 
 #reset::before {
@@ -307,6 +216,12 @@ a {
   right: 40px;
 }
 
+.type-p{
+  display: inline-block;
+  position: relative;
+  transform: translateY(3px);
+}
+
 @keyframes blink {
   0% {
     width: 25px;
@@ -321,19 +236,6 @@ a {
   }
 }
 
-@keyframes blink-button {
-  0% {
-    transform: translate(0px, 0px);
-  }
-
-  1% {
-    transform: translate(-8px, 0px);
-  }
-
-  2% {
-    transform: translate(0px, 0px);
-  }
-}
 
 @keyframes blink-pupil {
   0% {

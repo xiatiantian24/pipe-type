@@ -12,13 +12,11 @@ body {
 #game-container {
   position: absolute;
   width: auto;
-  top: 40px;
-  left: 140px;
+  top: 1vh;
+  left: 1vw;
   display: grid;
   grid-template-columns: repeat(12, 100px);
   grid-template-rows: repeat(4, 100px);
-  /* transform: scale(1); */
-  /* border: 3px solid #fff; */
   height: max-content;
 }
 
@@ -50,33 +48,9 @@ img {
   height: 100%;
   background: black;
   left: calc(50%-0);
-  /* Adjusted for pixel-perfect alignment */
+  /* Adjusted for perfect alignment */
   box-sizing: border-box;
 }
-
-/* .rectangle::after {
-  content: "";
-  position: absolute;
-  top: -10px;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  background: #000;
-  border-radius: 50%;
-  z-index: 1;
-} */
-
-/* .rectangle::before {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  background: #000;
-  border-radius: 50%;
-  z-index: 1;
-} */
 
 .t-shape {
   content: "";
@@ -90,28 +64,6 @@ img {
   transform: rotate(-90deg);
   box-sizing: border-box;
 }
-
-/* .t-shape::before {
-  content: "";
-  position: absolute;
-  top: 40px;
-  width: 20px;
-  height: 20px;
-  background: #000;
-  border-radius: 50%;
-  z-index: 1;
-} */
-
-/* .t-shape::after {
-  content: "";
-  position: absolute;
-  bottom: 40px;
-  width: 20px;
-  height: 20px;
-  background: #000;
-  border-radius: 50%;
-  z-index: 1;
-} */
 
 .round-wrap {
   position: relative;
@@ -132,31 +84,6 @@ img {
   top: calc(50% - 10px);
   left: calc(50% - 10px);
 }
-
-/* 
-.round-cap::after {
-  content: "";
-  position: absolute;
-  top: 40px;
-  right: -10px;
-  width: 20px;
-  height: 20px;
-  background: #000;
-  border-radius: 50%;
-  z-index: 1;
-}
-
-.round-cap::before {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 40px;
-  width: 20px;
-  height: 20px;
-  background: #000;
-  border-radius: 50%;
-  z-index: 1;
-} */
 
 .eye {
   width: 25px;
@@ -181,7 +108,6 @@ a {
   top: 40px;
   z-index: 10;
   padding: 12px;
-  /* border-color: #ccc; */
   cursor: pointer;
   align-items: center;
   vertical-align: middle;
@@ -196,15 +122,9 @@ a {
 }
 
 a:hover,
-#specimen-link:hover {
-  transform: translateX(6px);
-  color: #222;
-}
-
+#specimen-link:hover,
 #reset:hover {
-  transform: translateY(3px);
-  color: #222;
-
+  color: #111;
 }
 
 #reset::before {
@@ -253,7 +173,7 @@ a::after {
 }
 
 a {
-  animation: blink-button 5s ease-out;
+  /* animation: blink-button 8s ease-in-out; */
   animation-iteration-count: infinite;
   animation-delay: 3000ms;
   border: 2px solid #000;
@@ -286,20 +206,6 @@ a {
 
   2% {
     width: 25px;
-  }
-}
-
-@keyframes blink-button {
-  0% {
-    transform: translate(0px, 0px);
-  }
-
-  1% {
-    transform: translate(8px, 0px);
-  }
-
-  2% {
-    transform: translate(0px, 0px);
   }
 }
 

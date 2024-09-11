@@ -83,9 +83,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function rotatePiece() {
     let counter = parseInt(this.getAttribute("data-counter")) || 0;
     let rotation =
-      parseInt(this.getAttribute("data-initial-degree")) + (counter % 4) * 90;
+      parseInt(this.getAttribute("data-initial-degree")) + (counter) * 90;
 
     this.style.transform = `rotate(${rotation}deg)`;
+    this.style.transition = "transform 0.3s ease-in-out";
     this.setAttribute("data-rotation", rotation);
     this.setAttribute("data-counter", counter + 1);
   }

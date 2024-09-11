@@ -1,4 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
   const gameContainer = document.getElementById("game-container");
 
   function addPiece(shape, initialDegree, hasEyes) {
@@ -17,11 +16,12 @@ document.addEventListener("DOMContentLoaded", function () {
       pipePiece.addEventListener("click", () => {
         rotatePiece.call(pipePiece);
         applyColor.call(pipePiece);
+        animateBackground(pipePiece);
       });
     }
 
     if (hasEyes) {
-      // Add eyes
+      // Adding eyes
       const eyesContainer = document.createElement("div");
       eyesContainer.classList.add("eyes-container");
 
@@ -83,9 +83,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function rotatePiece() {
     let counter = parseInt(this.getAttribute("data-counter")) || 0;
     let rotation =
-      parseInt(this.getAttribute("data-initial-degree")) + (counter % 4) * 90;
+      parseInt(this.getAttribute("data-initial-degree")) + (counter) * 90;
 
     this.style.transform = `rotate(${rotation}deg)`;
+    this.style.transition = "transform 0.3s ease-in-out";
     this.setAttribute("data-rotation", rotation);
     this.setAttribute("data-counter", counter + 1);
   }
@@ -146,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
   reset();
   
 
-
+  //hardcoding all the characters for now
   //1st row
   addPiece("empty", 0);
   addPiece("empty", 0);
@@ -511,4 +512,3 @@ document.addEventListener("DOMContentLoaded", function () {
   addPiece("empty", 0);
 
   randomDelay();
-});
