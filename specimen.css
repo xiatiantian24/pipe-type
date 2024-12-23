@@ -125,7 +125,7 @@ img {
   z-index: 10;
 }
 
-button, a {
+#reset, a {
   width: 25px;
   height: 25px;
   background-color: white;
@@ -173,7 +173,7 @@ a:hover, #index-link:hover, #reset:hover {
   top: 70px;
 }
 
-.eye::after, button::after, a::after {
+.eye::after, #reset::after, a::after {
   content: '';
   width: 12px;
   height: 12px;
@@ -185,7 +185,7 @@ a:hover, #index-link:hover, #reset:hover {
   transform: translate(-50%, -50%);
 }
 
-button::after, a::after {
+#reset::after, a::after {
   animation: blink-pupil 5s ease-out;
   animation-iteration-count: infinite;
   animation-delay: 1000ms;
@@ -220,6 +220,72 @@ a {
   display: inline-block;
   position: relative;
   transform: translateY(3px);
+}
+
+.toggle-wrap{
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: auto;
+  bottom: 100px;
+  right: 40px;
+}
+
+.toggle-label{
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #777;
+  margin-right: 0.5rem;
+}
+
+.toggle-btn {
+  display: inline-block;
+  width: 55px;
+  height: 32px;
+  background-color: #ddd;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-btn::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 25px;
+  height: 25px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-sizing: border-box;
+}
+
+.toggle-btn::after {
+  content: '';
+  position: absolute;
+  top: 10px; 
+  left: 10px; 
+  width: 12px;
+  height: 0px;
+  background-color: #777; 
+  transition: transform 0.3s ease;
+  border-radius: 50%;
+}
+
+
+.toggle-btn.active::before {
+  transform: translateX(20px);
+  border: 2px solid #222;
+}
+
+.toggle-btn.active::after {
+  transform: translateX(20px);
+  height: 12px;
 }
 
 @keyframes blink {

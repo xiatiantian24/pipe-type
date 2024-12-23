@@ -70,6 +70,26 @@ document.addEventListener("DOMContentLoaded", function () {
     applyColor.call(pipePiece);
   }
 
+
+   //toggle eye visibility
+   function toggleEyesVisibility() {
+    const eyesContainers = document.querySelectorAll('.eyes-container');
+    const toggleButton = document.getElementById('toggle-eyes');
+    
+    eyesContainers.forEach(eyesContainer => {
+      if (eyesContainer.style.visibility === 'hidden') {
+        eyesContainer.style.visibility = 'visible';
+      } else {
+        eyesContainer.style.visibility = 'hidden';
+      }
+    });
+  
+    toggleButton.classList.toggle('active');
+  }
+
+  document.getElementById('toggle-eyes').addEventListener('click', toggleEyesVisibility);
+
+  
   function randomDelay() {
     const eyesContainers = document.body.querySelectorAll('.eyes-container');
     eyesContainers.forEach(eyesContainer => {
